@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #8a5236;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #8a5236; /* Header color */
+    color: white;
+}
+
+tr {
+    background-color: #ffeaa2; /* Slight light brown color for table rows */
+}
+
+tr:nth-child(even) {
+    background-color: #ffefb7; /* Alternate slight lighter brown color for even rows */
+}
+
+/* Additional CSS */
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.cart-container {
+    margin-top: 20px;
+}
+
+.cart-container h2 {
+    text-align: center;
+    color: #8a5236;
+}
+
+.cart-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cart-container ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-container ul li:last-child {
+    border-bottom: none;
+}
+
+.error-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-container { text-align: center; } 
+.closed-store-image { 
+    max-width: 100%; 
+    height: auto; 
+    margin: 20px auto; 
+    border-radius: 6px;
+}

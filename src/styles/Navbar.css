@@ -1,0 +1,108 @@
+/* Styles for Navbar Component */
+.navbar {
+  background-color: #8a5236;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-logo {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navbar-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links li {
+  margin: 0 10px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+.logout-button {
+   /* width: 50px; 
+   height: 50px;  */
+   background-color:green;
+   border: none;
+   border-radius: 50%; 
+   color: white; 
+   font-size: 21px; 
+   cursor: pointer; 
+   /* display: flex; */
+   /* align-items: center;  */
+   /* justify-content: center; */
+   /* position: absolute;   */
+   bottom: 8px; 
+   right: 8px;
+   transition: background-color 0.3s, 
+   transform 0.3s; /* Smooth transition for background color and transform */
+   } 
+.logout-button i { 
+  font-size: 22px; 
+}
+
+.logout-button:hover { 
+  background-color: #ff1a1a; /* Darker red on hover */
+  transform: scale(1.1)
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar-links li {
+    margin: 10px 0;
+  }
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 576px) {
+  .navbar {
+    justify-content: space-between;
+  }
+
+  .navbar-links {
+    display: none; /* Hide links on small devices */
+  }
+
+  .navbar-menu-icon {
+    display: block;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+  }
+}
+
+/* Show the navbar links when the menu icon is clicked */
+.navbar-links.show {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

@@ -1,0 +1,22 @@
+.alert-overlay {
+    position: fixed; /* Make the overlay fixed relative to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; /* Use Flexbox to center the content */
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5); /* Optional: dim the background */
+    z-index: 1000; /* Make sure the overlay is on top of other elements */
+  }
+  
+  .alert {
+    padding: 20px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+  }
+  
