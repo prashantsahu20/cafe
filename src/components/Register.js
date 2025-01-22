@@ -12,7 +12,8 @@ const Register = () => {
     address: ''
   });
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errors, setErrors] = useState({});
+  const [err,setErr]=useState("");
 
   const navigate = useNavigate();
 
@@ -30,14 +31,16 @@ const Register = () => {
       .then(response => {
         console.log('Data sent to server:', response.data);
         navigate('/login');
-        setErrorMessage(''); // Clear any existing error messages
+        setErrors({}); // Clear any existing error messages
       })
       .catch(error => {
         console.error('There was an error sending the data!', error);
         if (error.response && error.response.status === 400) {
-          setErrorMessage('Enter valid details in all fields.');
+          // Assuming error response contains field-specific errors in a simple format
+          setErrors(error.response.data);
+          setErr(`${JSON.stringify(error.response.data)}`);
         } else {
-          setErrorMessage('There was an error registering. Please try again.');
+          setErrors({ general: 'There was an error registering. Please try again later.' });
         }
       });
   };
@@ -46,7 +49,8 @@ const Register = () => {
     <div className="register-container">
       <h2 className="register-title">Register</h2>
       <form onSubmit={handleSubmit} className="register-form">
-        {errorMessage && <div style={{ color: 'red', marginBottom: '10px', textAlign: 'center' }}>{errorMessage}</div>}
+        {err && <div style={{ color: 'red', marginBottom: '10px', textAlign: 'center' }}>Enter the valid data</div>}
+
         <div className="form-group">
           <label htmlFor="name" className="form-label">Name:</label>
           <input
@@ -57,7 +61,9 @@ const Register = () => {
             onChange={handleChange}
             className="form-input"
           />
+          {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
         </div>
+
         <div className="form-group">
           <label htmlFor="email" className="form-label">Email:</label>
           <input
@@ -68,7 +74,9 @@ const Register = () => {
             onChange={handleChange}
             className="form-input"
           />
+          {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
         </div>
+
         <div className="form-group">
           <label htmlFor="password" className="form-label">Password:</label>
           <input
@@ -79,7 +87,9 @@ const Register = () => {
             onChange={handleChange}
             className="form-input"
           />
+          {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
         </div>
+
         <div className="form-group">
           <label htmlFor="phone" className="form-label">Phone Number:</label>
           <input
@@ -90,7 +100,9 @@ const Register = () => {
             onChange={handleChange}
             className="form-input"
           />
+          {errors.phone && <div style={{ color: 'red' }}>{errors.phone}</div>}
         </div>
+
         <div className="form-group">
           <label htmlFor="address" className="form-label">Address:</label>
           <input
@@ -101,7 +113,9 @@ const Register = () => {
             onChange={handleChange}
             className="form-input"
           />
+          {errors.address && <div style={{ color: 'red' }}>{errors.address}</div>}
         </div>
+
         <button type="submit" className="register-button">Register</button>
       </form>
       <p className="login-link">Already registered? <Link to="/login">Click here</Link> to login.</p>

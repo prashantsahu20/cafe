@@ -65,6 +65,13 @@
   transform: scale(1.1)
 }
 
+/* Style for active links */
+nav a.active { 
+  font-weight: bold;
+  /* color: rgb(255, 0, 179); */
+  border-bottom: 2px solid rgb(255, 0, 179); 
+}
+
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
   .navbar {

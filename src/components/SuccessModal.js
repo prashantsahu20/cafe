@@ -9,7 +9,7 @@ const SuccessModal = ({ show, onClose }) => {
     if (show) {
       const timer = setTimeout(() => {
         onClose();
-        navigate('/');
+        navigate('/profile');
       }, 2000);
 
       // Cleanup timeout if component unmounts before timeout completes

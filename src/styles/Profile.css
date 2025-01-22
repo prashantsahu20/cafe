@@ -103,3 +103,61 @@
   .clock {
     animation: clockEffect 5s infinite alternate;
   }
+
+  .profile-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 1000;
+  }
+
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .item-name {
+    flex-grow: 1;
+    text-align: left;
+  }
+  
+  .item-price {
+    flex-shrink: 0;
+    width: 100px; /* Adjust width as needed to align prices vertically */
+    text-align: right;
+  }
+  
+  .total-amount-containerp {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%; /* Ensure full width to align with item prices */
+    text-align: right;
+  }
+   
+  .total-amount-labelp {
+    flex-grow: 1;
+    text-align: right; /* Ensure label aligns with other text */
+    margin-right: 10px; /* Adjust as needed for spacing */
+  }
+ 
+  

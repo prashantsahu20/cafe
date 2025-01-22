@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
-const Login = ({ setIsLoggedIn, setUser }) => {
+const Login = ({ setIsLoggedIn, setUser,setPwd }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -30,6 +30,7 @@ const Login = ({ setIsLoggedIn, setUser }) => {
           'Content-Type': 'application/json'
         }
       });
+      setPwd(formData.password);
       console.log('Data sent to server:', response.data);
       setIsLoggedIn(true);
       setUser(response.data); // Save user data

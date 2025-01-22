@@ -13,6 +13,7 @@ import img12 from '../images/12.png';
 import img22 from '../images/22.png';
 import img23 from '../images/23.png';
 import img24 from '../images/24.png';
+import { useNavigate } from 'react-router-dom';
 
 const dishes = [
   { image: img3, title: 'Cold Coffee', description: 'Chilled, creamy coffee beverage bliss.', history: 'Cold Coffee, or iced coffee, is believed to have originated in Algeria around the 1840s as "Mazagran," a cold, sweetened coffee drink. The modern version, often referred to as Frappe, became popular in Greece during the 1950s. It\'s now enjoyed globally as a refreshing alternative to hot coffee.' },
@@ -42,6 +43,12 @@ function Home() {
     setModalIsOpen(false);
     setSelectedDish(null);
   };
+  
+  const navigate = useNavigate();
+
+  function orderNow(){
+    navigate("/order")
+  }
 
   return (
     <div>
@@ -72,6 +79,7 @@ function Home() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         dish={selectedDish}
+        orderNow={orderNow}
       />
     </div>
   );

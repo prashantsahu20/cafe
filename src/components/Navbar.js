@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
 
 function Navbar({ isLoggedIn, handleLogout }) {
@@ -11,21 +12,21 @@ function Navbar({ isLoggedIn, handleLogout }) {
     <nav className="navbar">
       <div className="navbar-logo" onClick={logoClick}>Cafe Dine</div>
       <ul className="navbar-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About Us</Link></li>
-       {!isLoggedIn && <li><Link to="/items">Items</Link></li> }
+        <li><NavLink to="/" activeClassName="active">Home</NavLink></li>
+        <li><NavLink to="/about"activeClassName="active" >About Us</NavLink></li>
+       {!isLoggedIn && <li><NavLink to="/items" activeClassName="active">Items</NavLink></li> }
         {isLoggedIn ? (
           <>
-            <li><Link to="/profile">Profile</Link></li>
-            <li><Link to="/order">Order</Link></li>
-            <li><Link to="/contact">Contact Us</Link></li>
+            <li><NavLink to="/profile" activeClassName="active">Profile</NavLink></li>
+            <li><NavLink to="/order" activeClassName="active">Order</NavLink></li>
+            <li><NavLink to="/contact" activeClassName="active">Contact Us</NavLink></li>
             <li><button onClick={handleLogout} className="logout-button"><i className="fas fa-power-off"></i></button></li>
           </>
         ) : (
           <>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/register">Register</Link></li>
-            <li><Link to="/contact">Contact Us</Link></li>
+            <li><NavLink to="/login" activeClassName="active">Login</NavLink></li>
+            <li><NavLink to="/register" activeClassName="active">Register</NavLink></li>
+            <li><NavLink to="/contact" activeClassName="active">Contact Us</NavLink></li>
           </>
         )}
       </ul>

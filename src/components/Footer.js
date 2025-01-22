@@ -5,7 +5,7 @@ import "../styles/Footer.css";
 function Footer() {
   return (
     <footer className="footer">
-      © 2024 Cafe Dine. All rights reserved.
+      © 2025 Cafe Dine. All rights reserved.
     </footer>
   );
 }
