@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Register.css';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,8 @@ const Register = () => {
     axios.post('http://localhost:8080/api/customers', formData)
       .then(response => {
         console.log('Data sent to server:', response.data);
+        const notify = () => toast.success('Registration Successful!');
+        notify();
         navigate('/login');
         setErrors({}); // Clear any existing error messages
       })

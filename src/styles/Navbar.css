@@ -1,4 +1,4 @@
-/* Styles for Navbar Component */
+/* Navbar Styles */
 .navbar {
   background-color: #8a5236;
   padding: 15px;
@@ -6,6 +6,7 @@
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .navbar-logo {
@@ -16,100 +17,98 @@
   cursor: pointer;
 }
 
+.hamburger {
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+/* Navbar Links */
 .navbar-links {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   align-items: center;
+  transition: all 0.3s ease-in-out;
 }
 
 .navbar-links li {
-  margin: 0 10px;
+  margin: 0 15px;
 }
 
 .navbar-links a {
   color: white;
   text-decoration: none;
   font-size: 18px;
+  transition: color 0.3s ease;
 }
 
 .navbar-links a:hover {
-  text-decoration: underline;
+  color: rgb(255, 0, 179);
 }
 
+/* Logout Button */
 .logout-button {
-   /* width: 50px; 
-   height: 50px;  */
-   background-color:green;
-   border: none;
-   border-radius: 50%; 
-   color: white; 
-   font-size: 21px; 
-   cursor: pointer; 
-   /* display: flex; */
-   /* align-items: center;  */
-   /* justify-content: center; */
-   /* position: absolute;   */
-   bottom: 8px; 
-   right: 8px;
-   transition: background-color 0.3s, 
-   transform 0.3s; /* Smooth transition for background color and transform */
-   } 
-.logout-button i { 
-  font-size: 22px; 
+  background-color: #28a745;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.logout-button:hover { 
-  background-color: #ff1a1a; /* Darker red on hover */
-  transform: scale(1.1)
+.logout-button:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.1);
 }
 
-/* Style for active links */
-nav a.active { 
+/* Active Links */
+.navbar-links a.active {
   font-weight: bold;
-  /* color: rgb(255, 0, 179); */
-  border-bottom: 2px solid rgb(255, 0, 179); 
+  color: whitesmoke;
+  border-bottom: 2px solid rgb(255, 0, 179);
 }
 
-/* Responsive design for mobile devices */
+/* Responsive Styles */
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
+  .hamburger {
+    display: block;
   }
 
+  .hamburger:active{
+    color: rgb(255, 0, 179);
+  }
+  
   .navbar-links {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #414141;
+    width: 50%;
+    height: calc(100vh - 60px);
     flex-direction: column;
-    width: 100%;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .navbar-links.active {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
   }
 
   .navbar-links li {
-    margin: 10px 0;
+    margin: 15px 0;
   }
-}
-
-/* Responsive design for mobile devices */
-@media (max-width: 576px) {
-  .navbar {
-    justify-content: space-between;
-  }
-
-  .navbar-links {
-    display: none; /* Hide links on small devices */
-  }
-
-  .navbar-menu-icon {
-    display: block;
-    font-size: 24px;
-    cursor: pointer;
-    color: white;
-  }
-}
-
-/* Show the navbar links when the menu icon is clicked */
-.navbar-links.show {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
 }

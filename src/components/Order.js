@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import '../styles/Order.css';
 import img from '../images/cart.png';
 import dd from '../images/default.png';
-// Import other images similarly...
 import img1 from '../images/1.png';
 import img2 from '../images/2.png';
 import img3 from '../images/3.png';
@@ -30,10 +29,12 @@ import img23 from '../images/23.png';
 import img24 from '../images/24.png';
 import img25 from '../images/25.png';
 
-import AutoDismissAlert from './AutoDismissAlert';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
-const Order = ({ user, addRecentOrder,pwd }) => {
+const PEXELS_API_KEY = 'BwFAHMQJWS5grDStCSxjOuFsPQa2KWP4HhAIfqKBJOaAexfsBMOHEcj2'; // Pexels API key
+
+const Order = ({ user, addRecentOrder, pwd }) => {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [order, setOrder] = useState({
@@ -41,9 +42,37 @@ const Order = ({ user, addRecentOrder,pwd }) => {
     orderDate: new Date().toISOString().split('T')[0],
     items: []
   });
-  
-  console.log(user);
-  const [pop, setPop] = useState(null);
+  const [imageMap, setImageMap] = useState({}); // State to store item images
+
+
+  const fetchImageFromPexels = useCallback((itemName) => {
+    const query = encodeURIComponent(itemName);
+    const url = `https://api.pexels.com/v1/search?query=${query}&per_page=1`;
+
+    return axios.get(url, {
+      headers: {
+        Authorization: PEXELS_API_KEY
+      }
+    })
+    .then(response => {
+      const imageUrl = response.data.photos[0].src.medium;
+      return imageUrl;
+    })
+    .catch(error => {
+      console.error('There was an error fetching the image from Pexels!', error);
+      return dd; // Return default image in case of error
+    });
+  }, []);
+
+  const fetchImages = useCallback((items) => {
+    items.forEach(item => {
+      if (!imageMap[item.id]) {
+        fetchImageFromPexels(item.name).then(url => {
+          setImageMap(prevMap => ({ ...prevMap, [item.id]: url }));
+        });
+      }
+    });
+  }, [fetchImageFromPexels, imageMap]);
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/items', {
@@ -54,11 +83,12 @@ const Order = ({ user, addRecentOrder,pwd }) => {
     })
     .then(response => {
       setItems(response.data);
+      fetchImages(response.data); // Fetch images for all items
     })
     .catch(error => {
       console.error('There was an error fetching the items!', error);
     });
-  }, [user.email,pwd]);
+  }, [user.email, pwd, fetchImages]);
 
   const handleItemSelection = (itemId) => {
     const selectedItem = items.find(item => item.id === itemId);
@@ -66,7 +96,9 @@ const Order = ({ user, addRecentOrder,pwd }) => {
       ...order,
       items: [...order.items, selectedItem]
     });
-    setPop({ message: 'Added to cart successfully!', duration: 1000 });
+    // setPop({ message: 'Added to cart successfully!', duration: 500 });
+    const notify = () => toast.success('Added to cart successfully!!');
+    notify();
   };
 
   const handleItemAddition = (itemId) => {
@@ -101,8 +133,7 @@ const Order = ({ user, addRecentOrder,pwd }) => {
     })
     .then(response => {
       navigate('/payment', { state: { totalAmount } });
-      setPop({ message: 'Order placed successfully!', duration: 1000 });
-      
+
       // Add order to recent orders
       addRecentOrder({
         ...order,
@@ -128,61 +159,41 @@ const Order = ({ user, addRecentOrder,pwd }) => {
 
   const totalAmount = order.items.reduce((total, item) => total + item.price, 0).toFixed(2);
 
+  const localImages = {
+    1: img1,
+    2: img2,
+    3: img3,
+    4: img4,
+    5: img5,
+    6: img6,
+    7: img7,
+    8: img8,
+    9: img9,
+    10: img10,
+    11: img11,
+    12: img12,
+    13: img13,
+    14: img14,
+    15: img15,
+    16: img16,
+    17: img17,
+    18: img18,
+    19: img19,
+    20: img20,
+    21: img21,
+    22: img22,
+    23: img23,
+    24: img24,
+    25: img25
+  };
+
   const getImageSrc = (itemId) => {
-    switch (itemId) {
-      case 1:
-        return img1;
-      case 2:
-        return img2;
-      case 3:
-        return img3;
-      case 4:
-        return img4;  
-      case 5:
-          return img5;  
-      case 6:
-          return img6;  
-      case 7:
-          return img7;
-      case 8:
-          return img8;   
-      case 9:
-            return img9;  
-      case 10:
-            return img10;
-      case 11:
-            return img11; 
-      case 12:
-            return img12;
-      case 13:
-            return img13;
-      case 14:
-            return img14;       
-      case 15:
-            return img15; 
-      case 16:
-            return img16;
-      case 17:
-            return img17; 
-      case 18:
-            return img18;
-      case 19:
-            return img19;                   
-      case 20:
-              return img20;       
-      case 21:
-              return img21; 
-      case 22:
-              return img22; 
-      case 23:
-            return img23; 
-      case 24:
-            return img24; 
-      case 25:
-            return img25; 
-      // Add cases for other images...
-      default:
-        return dd;
+    if (localImages[itemId]) {
+      return localImages[itemId];
+    } else if (imageMap[itemId]) {
+      return imageMap[itemId];
+    } else {
+      return dd; // Return default image if not found
     }
   };
 
@@ -196,7 +207,7 @@ const Order = ({ user, addRecentOrder,pwd }) => {
       <div className="order-header">
         <h1>Order Now</h1>
       </div>
-      {pop && ( <AutoDismissAlert message={pop.message} duration={pop.duration} onClose={() => setPop(null)} /> )}
+
       <ul className="item-list">
         {items.map(item => (
           <li key={item.id}>
@@ -206,7 +217,7 @@ const Order = ({ user, addRecentOrder,pwd }) => {
           </li>
         ))}
       </ul>
-      
+
       <div className="cart-section">
         <h2>Cart</h2>
         {order.items.length === 0 ? (
@@ -224,8 +235,8 @@ const Order = ({ user, addRecentOrder,pwd }) => {
                     <img src={getImageSrc(item.id)} alt={item.name} className="item-image" />
                     {item.name} - ₹{item.price.toFixed(2)}
                     <div className="item-actions">
-                      <button className="item-button-cart" onClick={() => handleItemAddition(item.id)}><i className="fas fa-plus"></i></button>
-                      <button className="item-button-cart" onClick={() => handleItemSubtraction(item.id)}><i className="fas fa-minus"></i></button>
+                      <button className="item-button-cart" onClick={() => handleItemAddition(item.id)}><i className="fas fa-plus" style={{color:'green'}}></i></button>
+                      <button className="item-button-cart" onClick={() => handleItemSubtraction(item.id)}><i className="fas fa-minus" style={{color:'darkred'}}></i></button>
                       <span className="item-quantity">Quantity: {itemQuantities[itemId]}</span>
                     </div>
                   </li>
